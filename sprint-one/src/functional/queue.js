@@ -16,16 +16,7 @@ var Queue = function() {
 
     var key = highestKey() + 1;
     
-    var add = function (value) {
-      if (storage[key] === undefined) {
-        storage[key] = value;
-      } else {
-        key += 1;
-        add(value);
-      }
-    };
-
-    add(value);
+    storage[key] = value;
   };
 
   someInstance.dequeue = function() {
@@ -41,10 +32,6 @@ var Queue = function() {
 
   someInstance.size = function() {
     return Object.keys(storage).length;
-  };
-
-  someInstance.first = function () {
-    
   };
 
   return someInstance;
