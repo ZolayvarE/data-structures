@@ -7,25 +7,36 @@ var Queue = function() {
   // Implement the methods below
 
   someInstance.enqueue = function(value) {
-    var timeStamp = new Date;
-    timeStamp = Number(timeStamp);
 
+    var highestKey = function () {
+      var keyArray = Object.keys(storage);
+      if (keyArray.length === 0) { return 0; }
+      return Math.max.apply(null, keyArray);
+    };
+
+    var key = highestKey() + 1;
+    
     var add = function (value) {
-      if (storage[timeStamp] === undefined) {
-        storage[timeStamp] = value;
+      if (storage[key] === undefined) {
+        storage[key] = value;
       } else {
-        timeStamp += 0.1;
+        key += 1;
         add(value);
       }
-    }
+    };
 
     add(value);
   };
 
   someInstance.dequeue = function() {
-    var removed = storage[someInstance.first()];
-    delete storage[someInstance.first()];
-    return removed;
+    var lowestKey = function() {
+      var keyArray = Object.keys(storage);
+      return Math.min.apply(null, keyArray);
+    };
+
+    var temp = storage[lowestKey()];
+    delete storage[lowestKey()];
+    return temp;
   };
 
   someInstance.size = function() {
@@ -33,15 +44,8 @@ var Queue = function() {
   };
 
   someInstance.first = function () {
-    var allKeys = Object.keys(storage);
-    for (var i = 0 ; i < allKeys.length ; i++) {
-      allKeys[i] = JSON.parse(allKeys[i]);
-    }
-    sortedKeys = allKeys.sort(function (a,b) { return b < a });
-
-    var result = JSON.stringify(sortedKeys[0]);
-    return result;
-  }
+    
+  };
 
   return someInstance;
 };
