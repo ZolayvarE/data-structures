@@ -30,7 +30,6 @@ var Stack = function() {
   someInstance.first = function () {
     var firstKey = someInstance.keys().sort(function (a,b) { 
       return a < b })[0];
-
     return JSON.stringify(firstKey);
   };
 
