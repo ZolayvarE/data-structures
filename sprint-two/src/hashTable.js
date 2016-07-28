@@ -11,29 +11,28 @@ HashTable.prototype.insert = function(k, v) {
   var bucket = this._storage[index];
   var tupple = [k, v];
   var found = _.reduce(bucket, function (memo, x) {
-    if (memo === true) { return memo; }
-    if (x[0] === k) {
+    if (memo === true) { 
+      return memo; 
+    } else if (x[0] === k) {
       x[1] = v;
-      this.tuppleCount++;
+      this._tuppleCount++;
       return memo = true;
     }
   }, false);
 
   if (!found) {
     this._storage[index].push(tupple);
-    this.tuppleCount++;
+    this._tuppleCount++;
   }
 
-  var usageRatio = function () {
-    return this.tuppleCount/size;
+  if (this._tuppleCount / this._limit > 0.75) {
+    this.double(this);
   }
-
-  if (this.tuppleCount)
 };
 
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  var bucket = this._storage[index];
+  var bucket = this._storage[index] || [];
   if (bucket.length === 0 || bucket === undefined) { return undefined; }
   if (bucket.length === 1) {
     return bucket[0][1];
@@ -53,6 +52,7 @@ HashTable.prototype.remove = function(k) {
   if (bucket.length === 1) {
     var temp = bucket[0][1];
     this._storage[index] = [];
+    this._tuppleCount--;
   } else if (bucket.length >= 2) {
     var temp = _.reduce(bucket, function (memo, x) {
       if (memo !== undefined) { return memo; }
@@ -63,30 +63,43 @@ HashTable.prototype.remove = function(k) {
     }, undefined);
 
     this._storage[index].splice(bucketIndex, 1);
+    this._tuppleCount--;
   }
-  this.tuppleCount--;
+  
+
+  if (this._tuppleCount / this._limit < 0.25) {
+    this.halve(this);
+  }
+
   return temp;
 };
 
 HashTable.prototype.rehash = function (oldHash, sizeModifier) {
-  var keyValueArray = _.reduce(this._storage, function (memo, x) {
-    if (x.length === 0) { return memo; }
-    _.each(x, function (y) { memo.push([y[0], y[1]]); });
-    return memo;
+  var keyValueArray = _.reduce(oldHash._storage, function (memo, x) {
+    // debugger;
+    if (x.length === 0 || Array.isArray(x) !== true) { 
+      return memo; 
+    } else if (x.length > 0) {
+      _.each(x, function (y) { memo.push([ y[0], y[1] ]); });
+      return memo;
+    }
   }, []);
 
-  var destination = new HashTable(this._limit * sizeModifier);
+  var destination = new HashTable(oldHash._limit * sizeModifier);
 
   var tuppleEater = function () {
-    if (tuppleArray.length !== 0) {
+    if (keyValueArray.length !== 0) {
       var tupple = keyValueArray.shift();
       destination.insert(tupple[0], tupple[1]);
+      tuppleEater();
     }
   };
 
   tuppleEater(keyValueArray);
 
-  oldHash = destination;
+  oldHash._storage = destination._storage;
+  oldHash._limit = destination._limit;
+  oldHash._tuppleCount = destination._tuppleCount;
 };
 
 HashTable.prototype.double = function (oldHash) {
