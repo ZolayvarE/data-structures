@@ -30,7 +30,6 @@ describe('hashTable', function() {
   });
 
   it('should not contain values that were removed', function() {
-    debugger;
     hashTable.insert('Steven', 'Tyler');
     hashTable.remove('Steven');
     expect(hashTable.retrieve('Steven')).to.equal(undefined);
