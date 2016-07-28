@@ -1,19 +1,24 @@
 var Set = function() {
   var set = Object.create(setPrototype);
-  set._storage = undefined;
+  set._storage = {};
   return set;
 };
 
 var setPrototype = {};
 
 setPrototype.add = function(item) {
-  set._storage = undefined;
+  this._storage[item] = item;
 };
 
 setPrototype.contains = function(item) {
+  return _.reduce(this._storage, function (memo, x) {
+    if (memo === true) { return true; }
+    if (x === item) { return memo = true; }
+  }, false);
 };
 
 setPrototype.remove = function(item) {
+  delete this._storage[item];
 };
 
 /*
