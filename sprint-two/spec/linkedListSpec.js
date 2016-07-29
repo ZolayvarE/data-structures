@@ -2,7 +2,7 @@ describe('linkedList', function() {
   var linkedList;
 
   beforeEach(function() {
-    linkedList = LinkedList();
+    linkedList = new LinkedList;
   });
 
   it('should have a head and tail', function() {
@@ -16,12 +16,14 @@ describe('linkedList', function() {
     expect(linkedList.contains).to.be.a('function');
   });
 
-  it('should designate a new tail when new nodes are added', function() {
+  it('should designate a new tail when new nodes are added to the tail', function() {
     linkedList.addToTail(4);
     expect(linkedList.tail.value).to.equal(4);
     linkedList.addToTail(5);
     expect(linkedList.tail.value).to.equal(5);
   });
+
+  
 
   it('should remove the head from the list when removeHead is called', function() {
     linkedList.addToTail(4);
@@ -51,5 +53,60 @@ describe('linkedList', function() {
     expect(linkedList.contains(4)).to.equal(false);
   });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // add more tests here to test the functionality of linkedList
+  it('should designate a new head when new nodes are added to the head', function () {
+    linkedList.addToHead(7);
+    expect(linkedList.head.value).to.equal(7);
+    linkedList.addToHead(89);
+    expect(linkedList.head.value).to.equal(89);
+  });
+
+  it('should have the "addToHead" and "removeTail" methods', function () {
+    expect(linkedList.addToHead).to.be.a('function');
+    expect(linkedList.removeTail).to.be.a('function');
+  });
 });
