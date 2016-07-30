@@ -36,18 +36,6 @@ BloomFilter.prototype.suspect = function (input) {
   }
 };
 
-BloomFilter.prototype.rehash = function (sizeModifier) {
-
-};
-
-BloomFilter.prototype.double = function (sizeModifier) {
-
-};
-
-BloomFilter.prototype.halve = function () {
-
-};
-
 BloomFilter.prototype.hasher1 = function (input, max) {
   var hash = 0;
   for (var i = 0; i < input.length; i++) {
@@ -84,14 +72,14 @@ BloomFilter.prototype.makeString = function (input) {
 
 var zxc = BloomFilter.prototype;
 
-var testString = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
 BloomFilter.prototype.getFalsePositiveRate = function (n) {
   var testFilter = new BloomFilter;
+  var testString = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
   var positives = [];
   var falsePositives = 0;
   var testsRun = 0;
-  var testSlice; 
+  var testSlice;
+
   var getRandomSlice = function (string) {
     var randIndex1 = Math.floor(Math.random() * string.length);
     var randIndex2 = Math.floor(Math.random() * string.length);
