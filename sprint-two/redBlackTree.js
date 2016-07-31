@@ -56,10 +56,10 @@ RnBtree.prototype.case4 = function (n) {
     var uncle = parent.getSibling();
     if (parent.color === 'red' && uncle.color === 'black') {
       if (n.side === 1 && parent.side === 0) {
-        RnB.rotateLeft(n);
+        n = RnB.rotateLeft(n);
         RnB.checkCases(n.left);
       } else if (n.side === 0 && parent.side === 1) {
-        RnB.rotateRight(n);
+        n = RnB.rotateRight(n);
         RnB.checkCases(n.right);
       }
     }
@@ -73,10 +73,12 @@ RnBtree.prototype.case5 = function (n) {
     var uncle = parent.getSibling();
     if (parent.color === 'red' && uncle.color === 'black') {
       if (n.side === 1 && parent.side === 1) {
-        RnB.rotateLeft(parent);
-        RnB.checkCases(n.parent);
+        n = RnB.rotateLeft(parent);
+        n.left.color = 'red';
+        RnB.checkCases(n);
       } else if (n.side === 0 && parent.side === 0) {
-        RnB.rotateRight(parent);
+        n = RnB.rotateRight(parent);
+        n.right.color = 'red';
         RnB.checkCases(n);
       }
     }
@@ -154,7 +156,7 @@ RnBtree.prototype.rotateLeft = function (node) {
   savedNode.right.parent = savedNode;
   savedParent.left.parent = savedParent;
   RnB.extend(node.parent, savedNode);
-  return savedNode;
+  return node.parent;
 };
 
 RnBtree.prototype.rotateRight = function (node) {
@@ -172,7 +174,7 @@ RnBtree.prototype.rotateRight = function (node) {
   savedNode.left.parent = savedNode;
   savedParent.right.parent = savedParent;
   RnB.extend(node.parent, savedNode);
-  return savedNode;
+  return node.parent;
 };
 
 RnBtree.prototype.extend = function (obj1, obj2) {
