@@ -182,11 +182,9 @@ RnBtree.prototype.rotateRight = function (node) {
   var savedRight = RnB.extend(new RnBtree(null, null, null), node.right);
   savedNode.parent = node.parent.parent;
   savedNode.side = node.parent.side;
-  // Pair;
   savedParent.left = savedRight;
   savedRight.parent = savedParent;
   savedParent.side = 1;
-  // Pair;
   savedNode.right = savedParent;
   savedParent.parent = node.parent;
   savedNode.left.parent = node.parent;
