@@ -201,7 +201,7 @@ RnBtree.prototype.extend = function (obj1, obj2) {
   if (obj1 === null) { obj1 = new RnBtree(null, null, null); }
   if (obj2 === null) { return obj1 = null; }
   var items = ['value', 'color', 'left', 'right', 'parent', 'side'];
-  for (var i = 0; i < items.length; i++) {
+  for (var i = 0; i < items.length; i++) { 
     obj1[items[i]] = obj2[items[i]];
   }  
 
