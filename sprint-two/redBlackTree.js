@@ -10,7 +10,6 @@ var RnBtree = function (value, side, parent) {
   this.parent = parent;
   this.side = side;
   this.case1(this);
-  this.nodeCount = 0;
 };
 
 RnBtree.prototype.getSibling = function () {
@@ -38,6 +37,7 @@ RnBtree.prototype.case2 = function (n) {
 };
 
 RnBtree.prototype.case3 = function (n) {
+  // debugger;
   if (n.parent !== null && n.parent.parent !== null) {
     var parent = n.parent;
     var grandParent = n.parent.parent;
@@ -134,7 +134,6 @@ RnBtree.prototype.insert = function (value) {
   };
 
   check(this);
-  this.nodeCount++;
 };
 
 RnBtree.prototype.contains = function (value) {
@@ -165,6 +164,7 @@ RnBtree.prototype.rotateLeft = function (node) {
   // Pair;
   savedParent.right = savedLeft;
   savedLeft.parent = savedParent;
+  savedParent.side = 0;
   // Pair;
   savedNode.left = savedParent;
   savedParent.parent = node.parent;
@@ -185,6 +185,7 @@ RnBtree.prototype.rotateRight = function (node) {
   // Pair;
   savedParent.left = savedRight;
   savedRight.parent = savedParent;
+  savedParent.side = 1;
   // Pair;
   savedNode.right = savedParent;
   savedParent.parent = node.parent;
